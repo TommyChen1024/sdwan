@@ -1,0 +1,39 @@
+---
+# WAN Pathfinder Nodes
+
+type: wan_rr
+
+# data_plane_cpu_allocation_max: 1
+
+wan_rr: # dynamic_key: node_type
+  defaults:
+    data_plane_cpu_allocation_max: 1
+    loopback_ipv4_pool: 10.254.18.0/30
+    vtep_loopback_ipv4_pool: 192.168.18.0/30
+    filter:
+      always_include_vrfs_in_tenants: [cvnselab18]
+  nodes:
+    - name: cvn18-pf1
+      id: 1
+      mgmt_ip: 10.90.245.37/24
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.1/24
+          wan_carrier: internet1
+          wan_circuit_id: PF1-INET-1
+        - name: Ethernet8
+          ip_address: 172.29.18.1/24
+          wan_carrier: mpls1
+          wan_circuit_id: PF1-MPLS-1
+    - name: cvn18-pf2
+      id: 2
+      mgmt_ip: 10.90.245.39/24
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.2/24
+          wan_carrier: internet1
+          wan_circuit_id: PF2-INET-2
+        - name: Ethernet8
+          ip_address: 172.29.18.2/24
+          wan_carrier: mpls1
+          wan_circuit_id: PF2-MPLS-2

@@ -1,0 +1,76 @@
+---
+
+# Edge nodes configuration
+
+type: wan_router
+
+wan_router:  # dynamic_key: node_type
+  defaults:
+    id: 1
+    loopback_ipv4_offset: -1
+    cv_pathfinder_region: cvn18_region1
+    filter:
+      always_include_vrfs_in_tenants: [cvnselab18]
+
+  nodes:
+    - name: cvn18-edge-a1
+      cv_pathfinder_region: cvn18_region1
+      cv_pathfinder_site: Site-Edge-A1
+      mgmt_ip: 10.90.245.59/24
+      loopback_ipv4_pool: 10.254.218.1/32
+      vtep_loopback_ipv4_pool: 192.168.218.1/32
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.7/24
+          wan_carrier: internet1
+          wan_circuit_id: Site-Edge-A1-INET-7
+        - name: Ethernet8
+          ip_address: 172.29.18.7/24
+          wan_carrier: mpls1
+          wan_circuit_id: Site-Edge-A1-MPLS-7
+    - name: cvn18-edge-a2
+      cv_pathfinder_region: cvn18_region1
+      cv_pathfinder_site: Site-Edge-A2
+      mgmt_ip: 10.90.245.181/24
+      loopback_ipv4_pool: 10.254.218.2/32
+      vtep_loopback_ipv4_pool: 192.168.218.2/32
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.8/24
+          wan_carrier: internet1
+          wan_circuit_id: Site-Edge-A2-INET-8
+        - name: Ethernet8
+          ip_address: 172.29.18.8/24
+          wan_carrier: mpls1
+          wan_circuit_id: Site-Edge-A2-MPLS-8
+    - name: cvn18-edge-b1
+      cv_pathfinder_region: cvn18_region2
+      cv_pathfinder_site: Site-Edge-B1
+      mgmt_ip: 10.90.245.100/24
+      loopback_ipv4_pool: 10.254.219.1/32
+      vtep_loopback_ipv4_pool: 192.168.219.1/32
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.9/24
+          wan_carrier: internet1
+          wan_circuit_id: Site-Edge-B1-INET-9
+        - name: Ethernet8
+          ip_address: 172.29.18.9/24
+          wan_carrier: mpls1
+          wan_circuit_id: Site-Edge-B1-MPLS-9
+    - name: cvn18-edge-b2
+      cv_pathfinder_region: cvn18_region2
+      cv_pathfinder_site: Site-Edge-B2
+      mgmt_ip: 10.90.245.102/24
+      loopback_ipv4_pool: 10.254.219.2/32
+      vtep_loopback_ipv4_pool: 192.168.219.2/32
+      l3_interfaces:
+        - name: Ethernet1
+          ip_address: 10.90.248.10/24
+          wan_carrier: internet1
+          wan_circuit_id: Site-Edge-B2-INET-10
+        - name: Ethernet8
+          ip_address: 172.29.18.10/24
+          wan_carrier: mpls1
+          wan_circuit_id: Site-Edge-B2-MPLS-10
+

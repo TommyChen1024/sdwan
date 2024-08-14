@@ -1,0 +1,156 @@
+---
+
+# WAN Management Settings
+
+mgmt_interface_vrf: mgmt
+default_mgmt_method: oob
+mgmt_gateway: 10.90.245.1
+
+logging:
+  console: "debugging"
+  monitor: "debugging"
+
+load_interval:
+  default: 5
+
+custom_structured_configuration_qos_profiles:
+  - name: txQPolicy1
+    tx_queues:
+        # TX-Queue ID
+      - id: 0
+        priority: "no priority"
+      - id: 1
+        priority: "no priority"
+      - id: 2
+        priority: "no priority"
+  - name: txQPolicy2
+    tx_queues:
+        # TX-Queue ID
+      - id: 0
+        bandwidth_percent: 10
+      - id: 2
+        bandwidth_percent: 17
+      - id: 3
+        bandwidth_percent: 14
+
+custom_structured_configuration_flow_tracking:
+  hardware:
+    trackers:
+    - name: FLOW-TRACKER
+      record_export:
+        on_inactive_timeout: 70000
+        on_interval: 300000
+      exporters:
+      - name: CV-TELEMETRY
+        collector:
+          host: 127.0.0.1
+        local_interface: Loopback0
+        template_interval: 3000000
+    shutdown: false
+
+dns_domain: sjc.aristanetworks.com
+
+custom_structured_configuration_switchport_default:
+  mode: "routed"
+
+custom_structured_configuration_agents:
+  - name: KernelFib
+    environment_variables:
+      - name: KERNELFIB_PROGRAM_ALL_ECMP
+        value: "'true'"
+
+custom_structured_configuration_qos:
+  rewrite_dscp: false
+
+custom_structured_configuration_ip_access_lists:
+  - name: sshACL1
+    entries:
+      - sequence: 10
+        action: permit
+        protocol: tcp
+        source: 172.29.3.0/24
+        source_ports_match: eq
+        source_ports:
+          - 22
+        destination: 172.29.4.0/24
+
+custom_structured_configuration_class_maps:
+  qos:
+    - name: class1
+      ip:
+        access_group: sshACL1
+
+custom_structured_configuration_policy_maps:
+  qos:
+    - name: policy1
+      classes:
+        - name: class1
+          set:
+            dscp: 32
+
+local_users:
+  - name: admin
+    role: network-admin
+    privilege: 15
+    sha512_password: "$6$JrS3d2nAMOGnIlAh$h3J1UHELqo4rO4X.11QwVWltyNzvT4EV/7ufhuJ.yonFGjRWm8YpCbLN3IldeWZqs8YIOoKSrdx2f6Dsgg1OF0"
+
+cvp_instance_ips: ["apiserver.cv-staging.corp.arista.io"]
+
+custom_structured_configuration_aliases: |
+  alias cc clear counters
+  alias senz show interface counter error | nz
+  alias shin show interface status
+  alias shmc show int | awk '/^[A-Z]/ { intf = $1 } /, address is/ { print intf, $6 }'
+  alias snz show interface counter | nz
+  alias spc show port-channel %1 detail all
+  alias sqnz show interface counter queue | nz
+  alias srnz show interface counter rate | n
+
+custom_structured_configuration_daemon_terminattr:
+  cvauth:
+    token_file: "/tmp/cv-onboarding-token"
+  disable_aaa: true
+
+custom_structured_configuration_system:
+  l1:
+    unsupported_speed_action: "error"
+    unsupported_error_correction_action: "error"
+
+custom_structured_configuration_ip_domain_lookup:
+  source_interfaces:
+    - name: Management1
+
+custom_structured_configuration_ip_name_servers:
+  - ip_address: 10.14.0.1
+    vrf: mgmt
+  - ip_address: 172.22.22.40
+    vrf: mgmt
+  - ip_address: 8.8.4.4
+    vrf: mgmt
+    priority: 4
+  - ip_address: 8.8.8.8
+    vrf: mgmt
+    priority: 4
+
+ntp_settings:
+  server_vrf: mgmt
+  servers:
+    - name: 10.41.194.6
+    - name: 10.85.14.245
+    - name: time.google.com
+
+custom_structured_configuration_management_ssh:
+  client_alive:
+    interval: 180
+
+skipped_tests:
+  - category: AvdTestHardware
+    tests:
+      - VerifyEnvironmentPower
+      - VerifyEnvironmentCooling
+      - VerifyTemperature
+      - VerifyTransceiversManufacturers
+
+custom_structured_configuration_banners:
+  motd: "WAN PM-SE Demo lab cvnselab18. This setup is read-only access via CLI or CVaaS. Please contact gerry@ with any questions\n \
+Note: Managed by CVaaS (cv-staging) \n"

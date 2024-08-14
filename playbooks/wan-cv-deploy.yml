@@ -1,0 +1,38 @@
+- name: Deploy WAN Configuration with CloudVision
+  hosts: WAN
+  connection: local
+  gather_facts: false
+  tasks:
+    # - name: Deploy configurations and tags to CloudVision
+    #   ansible.builtin.import_role:
+    #     name: arista.avd.deploy_to_cv
+    #   vars:
+    #     cv_submit_workspace: false
+    #     cv_workspace_name: "AVD_Testing"
+    #     cv_workspace_description: "Test AVD Development for CV Pathfinder"
+    #     cv_strict_tags: false
+    #     cv_register_detailed_results: true
+    #     cv_workspace_id: ""
+    - name: Provision CVP with AVD configuration
+      run_once: true
+      delegate_to: localhost
+      arista.avd.deploy_to_cv:
+        cv_servers: [ "www.cv-staging.corp.arista.io" ]
+        cv_token: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjY0NDk3NTAsImRzbiI6Imlzcm8iLCJkc3QiOiJhY2NvdW50IiwiZXhwIjoxNzU0MDk0ODQ0LCJpYXQiOjE3MjI1NTg4NTgsIm9naSI6NDEzNTU2MCwib2duIjoiY3Zuc2VsYWIwNiIsInNpZCI6IjQ3ZGQ4YmM0NWJiNGJhMTNlNTU0YzJiMTc1ZTQ2MTViMmU4Y2I1YTQ5MWVmNjg4ODI5NDQ0Y2RhZjQ1MzUyMjAtdHF5NEYwNVNrbVYwdmg4bmxYaHgteGlSTU4wNGpaLUxfNEhHal9SWiJ9.qXpejo2AqK9bcykLggTWNsuLxDfTJ3my0tOhhgNXe9boXtCM1Bk_ulO9UKp_LeQ9GKC5cDwUfmqNuEID5_amwA"
+        # cv_verify_certs: True
+        configuration_dir: "{{ inventory_dir }}/intended/configs"
+        structured_config_dir: "{{ inventory_dir }}/intended/structured_configs"
+        # structured_config_suffix: "yml"
+        device_list: "{{ ansible_play_hosts }}"
+        # strict_tags: false
+        # skip_missing_devices: false
+        # configlet_name_template: "AVD-${hostname}"
+        workspace:
+        #   name:
+        #   description:
+          # id:
+          requested_state: submitted
+          # force: False
+        change_control:
+          requested_state: pending approval
+        return_details: false

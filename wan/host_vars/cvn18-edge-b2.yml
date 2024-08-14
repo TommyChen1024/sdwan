@@ -1,0 +1,75 @@
+---
+
+# cvn10-Site-Tier3-1 Router Configuration
+
+# custom_structured_configuration_prompt: "%H%P"
+
+# clock:
+#   timezone: "PST8PDT"
+
+# tacacs_servers:
+#   hosts:
+#     - host: 10.0.104.10
+#       key: 153F32272113
+#       key_type: "7"
+
+# load_interval:
+#   default: 1
+
+# custom_structured_configuration_router_bgp:
+#   as: 65199
+#   router_id: 10.254.120.1
+#   distance:
+#     external_routes: 20
+#     internal_routes: 200
+#     local_routes: 200
+
+custom_structured_configuration_ethernet_interfaces:
+- name: Ethernet1
+  mtu: 1500
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet7
+  ip_address: 172.29.7.1/24
+  shutdown: false
+  vrf: dev
+  type: routed
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet8
+  mtu: 1700
+  flow_tracker:
+    hardware: FLOW-TRACKER
+# - name: Ethernet4
+#   ip_address: 172.29.214.4/24
+#   shutdown: false
+#   vrf: prod
+#   type: routed
+#   flow_tracker:
+#     hardware: FLOW-TRACKER
+#   service_policy:
+#     qos:
+#       input: policy1
+# - name: Ethernet5
+#   shutdown: false
+#   ip_address: 172.18.18.5/31
+#   vrf: prod
+#   type: routed
+#   flow_tracker:
+#     hardware: FLOW-TRACKER
+#   service_profile: txQPolicy1
+#   shape:
+    # Supported options are platform dependent
+    # Example: "< rate > kbps", "1-100 percent", "< rate > pps"
+    # rate: "47500000"
+
+# - name: Ethernet6
+#   shutdown: false
+  #speed: auto
+  #speed: forced 1000full
+  # ip_address: 172.28.28.6/30
+  # vrf: prod
+  # type: routed
+  # flow_tracker:
+  #   hardware: FLOW-TRACKER
+  # service_profile: txQPolicy2

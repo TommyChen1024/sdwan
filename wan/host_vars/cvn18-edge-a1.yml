@@ -1,0 +1,51 @@
+---
+
+# cvn10-Site-Tier1-1 Router Configuration
+
+# custom_structured_configuration_router_path_selection:
+#   path_groups:
+#     - name: LAN_HA
+#       id: 65530
+#       local_interfaces:
+#         - name: Ethernet7
+#         # - name: Ethernet7
+#       ipsec_profile: CP-PROFILE
+#       flow_assignment: lan
+#       static_peers:
+#         - router_ip: 192.168.218.2
+#           ipv4_addresses:
+#             - 172.29.217.4
+#             # - 172.29.9.4
+
+custom_structured_configuration_ethernet_interfaces:
+- name: Ethernet1
+  mtu: 1500
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet2
+  ip_address: 172.29.2.1/24
+  shutdown: false
+  vrf: prod
+  type: routed
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet3
+  ip_address: 172.29.3.1/24
+  shutdown: false
+  vrf: dev
+  type: routed
+  flow_tracker:
+    hardware: FLOW-TRACKER
+# - name: Ethernet6
+#   mtu: 1600
+#   description: "LAN HA Interface"
+#   ip_address: 172.29.9.3/29
+#   shutdown: false
+#   type: routed
+#   flow_tracker:
+#     hardware: FLOW-TRACKER
+- name: Ethernet8
+  mtu: 1700
+  flow_tracker:
+    hardware: FLOW-TRACKER
+

@@ -1,0 +1,11 @@
+---
+
+custom_structured_configuration_ethernet_interfaces:
+- name: Ethernet1
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet8
+  flow_tracker:
+    hardware: FLOW-TRACKER
+
+

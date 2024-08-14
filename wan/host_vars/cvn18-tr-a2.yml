@@ -1,0 +1,40 @@
+---
+
+# cvn10-tra-2 Router Configuration
+
+custom_structured_configuration_agents:
+  - name: Sfe
+    environment_variables:
+      - name: SFE_DELAY_INTF
+        value: '*,0,0,0'
+
+# custom_structured_configuration_router_path_selection:
+#   path_groups:
+#     - name: LAN_HA
+#       id: 65531
+#       local_interfaces:
+#         - name: Ethernet7
+#       ipsec_profile: CP-PROFILE
+#       flow_assignment: lan
+#       static_peers:
+#         - router_ip: 192.168.118.1
+#           ipv4_addresses:
+#             - 172.29.118.3
+
+custom_structured_configuration_ethernet_interfaces:
+- name: Ethernet1
+  mtu: 1500
+  flow_tracker:
+    hardware: FLOW-TRACKER
+# - name: Ethernet7
+#   mtu: 1600
+#   description: "LAN HA Interface"
+#   ip_address: 172.29.117.4/29
+#   shutdown: false
+#   type: routed
+#   flow_tracker:
+#     hardware: FLOW-TRACKER
+- name: Ethernet8
+  mtu: 1700
+  flow_tracker:
+    hardware: FLOW-TRACKER

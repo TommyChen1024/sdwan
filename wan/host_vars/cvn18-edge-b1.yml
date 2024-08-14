@@ -1,0 +1,45 @@
+---
+
+# cvn10-Site-Tier2-1 Router Configuration
+
+# custom_structured_configuration_ethernet_interfaces:
+# - name: Ethernet3
+#   ip_address: 172.29.223.3/24
+#   shutdown: false
+#   vrf: prod
+#   type: routed
+#   flow_tracker:
+#     hardware: FLOW-TRACKER
+#   service_policy:
+#     qos:
+#       input: policy1
+custom_structured_configuration_ethernet_interfaces:
+- name: Ethernet1
+  mtu: 1500
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet6
+  ip_address: 172.29.6.1/24
+  shutdown: false
+  vrf: prod
+  type: routed
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet4
+  ip_address: 172.29.144.1/24
+  shutdown: false
+  vrf: prod
+  type: routed
+  flow_tracker:
+    hardware: FLOW-TRACKER
+- name: Ethernet8
+  mtu: 1700
+  flow_tracker:
+    hardware: FLOW-TRACKER
+  # qos:  This config only applies to non-IP packets
+  #   dscp: 32
+
+# This is how you can add an arbitrary CLI that is not yet in AVD to the config
+# custom_structured_configuration_eos_cli: |-
+#   interface Ethernet4
+#     speed auto

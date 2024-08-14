@@ -1,0 +1,36 @@
+---
+all:
+  hosts:
+    cloudvision:
+      ansible_host: "www.cv-staging.corp.arista.io"
+      ansible_password: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJkaWQiOjQ3NjUzNDAsImRzbiI6ImF2ZCIsImRzdCI6ImFjY291bnQiLCJleHAiOjE3NjcyNDM1OTksImlhdCI6MTcwNjI5OTI1MCwib2dpIjo0NzMwMDcxLCJvZ24iOiJjdm5zZWxhYjEwIiwic2lkIjoiOTc2OGQ4Y2RhMTgzMmFmYThlMWQ3ZDBlMDI0ODIxY2I3NmQ1YTA2NmRmZmQ3YTE3Y2RkMGYwNDBkMmU2OGQ2NC1jYUs5dUpOT2R4anQ5bV9NaGNlcUZlRjZpbkVrd1dNMGlyTHBJYlJSIn0.K4XLTjGVn4yxFaKklc-iz-mnhz73kdEvMMIm0XUS-bv32EkWUAELQNotxLxWvaV-pkSxyoC-KkDulr5INS4DCg"
+  children:
+    WAN:
+      children:
+        pathfinder_nodes:
+          hosts:
+            cvn18-pf1:
+              ansible_host: 10.90.245.37
+            cvn18-pf2:
+              ansible_host: 10.90.245.39
+        transit_nodes:
+          hosts:
+            cvn18-tr-a1:
+              ansible_host: 10.90.245.90
+            cvn18-tr-a2:
+              ansible_host: 10.90.245.51
+            cvn18-tr-b1:
+              ansible_host: 10.90.245.97
+            cvn18-tr-b2:
+              ansible_host: 10.90.245.99
+        edge_nodes:
+          hosts:
+            cvn18-edge-a1:
+              ansible_host: 10.90.245.59
+            cvn18-edge-a2:
+              ansible_host: 10.90.245.181
+            cvn18-edge-b1:
+              ansible_host: 10.90.245.100
+            cvn18-edge-b2:
+              ansible_host: 10.90.245.102
+
